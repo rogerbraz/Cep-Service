@@ -1,62 +1,33 @@
 package br.com.correios.cep.controller.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
+import br.com.correios.cep.model.Endereco;
+import lombok.Getter;
+import lombok.Setter;
 
-
+@Getter
+@Setter
 public class EnderecoDTO {
-	
+
 	private String cep;
 	private String Logradouro;
 	private String Bairro;
 	private String Cidade;
-	private String estado;
-	
-	
-	public String getCep() {
-		return cep;
-	}
-	public void setCep(String cep) {
-		this.cep = cep;
-	}
-	public String getLogradouro() {
-		return Logradouro;
-	}
-	public void setLogradouro(String logradouro) {
-		Logradouro = logradouro;
-	}
-	public String getBairro() {
-		return Bairro;
-	}
-	public void setBairro(String bairro) {
-		Bairro = bairro;
-	}
-	public String getCidade() {
-		return Cidade;
-	}
-	public void setCidade(String cidade) {
-		Cidade = cidade;
-	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
+	public EnderecoDTO() {
+
+	}
+
+	public EnderecoDTO(Endereco endereco) {
+		this.cep = endereco.getCep();
+		this.Logradouro = endereco.getLogradouro();
+		this.Bairro = endereco.getBairro();
+		this.Cidade = endereco.getCidade();
+	}
+
+	public static List<EnderecoDTO> converter(List<Endereco> endereco) {
+		return endereco.stream().map(EnderecoDTO::new).collect(Collectors.toList());
+	}
 }

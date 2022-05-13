@@ -7,11 +7,20 @@ import javax.persistence.Id;
 public class Endereco {
 	
 	@Id	
+	private Long id;
+	
 	private String cep;
 	private String logradouro;
 	private String bairro;
 	private String cidade;
 	private String estado;
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getCep() {
 		return cep;
 	}
