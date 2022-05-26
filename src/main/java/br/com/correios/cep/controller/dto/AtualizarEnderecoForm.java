@@ -12,8 +12,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class EnderecoForm {
-
+public class AtualizarEnderecoForm {
+	
 	@NotEmpty
 	@NotNull
 	@Length(min = 8 , max = 8 )
@@ -27,12 +27,15 @@ public class EnderecoForm {
 	@NotEmpty
 	@NotNull
 	private String cidade;
-	@NotEmpty
-	@NotNull
-	private String estado;
-
-	public Endereco converter(EnderecoRepository enderecoRepository) {
-		return new Endereco(cep, logradouro, bairro, cidade, estado);
+	
+	public Endereco atualizar(Long id, EnderecoRepository enderecoRepository) {
+		Endereco endereco = enderecoRepository.getById(id);
+		endereco.setCep(this.cep);
+		endereco.setLogradouro(this.logradouro);
+		endereco.setCidade(this.cidade);
+		endereco.setBairro(this.bairro);	
+		
+		return endereco;
 	}
 
 }
