@@ -1,8 +1,8 @@
 package br.com.correios.cep.controller.dto;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import org.springframework.data.domain.Page;
 
 import br.com.correios.cep.model.Endereco;
 import lombok.Getter;
@@ -30,12 +30,13 @@ public class EnderecoDTO {
 		this.Cidade = endereco.getCidade();
 	}
 
-	public static List<EnderecoDTO> converter(Optional<Endereco> findByIdt) {
-		return findByIdt.stream().map(EnderecoDTO::new).collect(Collectors.toList());
+	public static Page<EnderecoDTO> converter(Page<Endereco> endereco) {
+		return endereco.map(EnderecoDTO::new);
 	}
 
-	public static List<EnderecoDTO> converter(List<Endereco> findAll) {
-		return findAll.stream().map(EnderecoDTO::new).collect(Collectors.toList());
+	public static Page<EnderecoDTO> converter(Optional<Endereco> findById) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

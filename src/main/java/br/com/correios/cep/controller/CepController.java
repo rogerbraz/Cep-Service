@@ -1,11 +1,10 @@
 package br.com.correios.cep.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,18 +31,15 @@ public class CepController {
 	@Autowired
 	public EnderecoRepository enderecoRepository;
 
-	@GetMapping("/{cep}")
-	public List<EnderecoDTO> buscaCep(@PathVariable(required = false) Long id) {
-		return cepservice.buscaCep(id);
-	}
+	@GetMapping
+	@Transactional
+	public Page<EnderecoDTO> buscaCep(@PathVariable(required = false) Long id, int pagina, int qtd, String ordenacao) {
 
-	@GetMapping()
-	public List<EnderecoDTO> buscaCep() {
-		return cepservice.buscaCep(null);
+		return cepservice.buscaCep(id, pagina, qtd, ordenacao);
 	}
 
 	@PostMapping()
-	@Transactional	
+	@Transactional
 	public ResponseEntity<EnderecoDTO> cadastrar(@RequestBody @Valid EnderecoForm form,
 			UriComponentsBuilder uriBuilder) {
 		return cepservice.cadastrar(form, uriBuilder);
@@ -53,15 +49,12 @@ public class CepController {
 	@Transactional
 	public ResponseEntity<EnderecoDTO> atualizar(@PathVariable Long id,
 			@RequestBody @Valid AtualizarEnderecoForm form) {
-		return cepservice.atualizar(id ,form);
+		return cepservice.atualizar(id, form);
 	}
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> remover (@PathVariable Long id){
+	public ResponseEntity<?> remover(@PathVariable Long id) {
 		return cepservice.remover(id);
 	}
-	
-	
-	
-	
-	
+
 }
