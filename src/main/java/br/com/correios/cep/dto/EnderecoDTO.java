@@ -1,10 +1,10 @@
-package br.com.correios.cep.controller.dto;
+package br.com.correios.cep.dto;
 
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
-import br.com.correios.cep.model.Endereco;
+import br.com.correios.cep.Endereco;
 import lombok.Getter;
 import lombok.Setter;
 

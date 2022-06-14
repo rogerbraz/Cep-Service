@@ -1,4 +1,4 @@
-package br.com.correios.cep.controller.validacao;
+package br.com.correios.handler;
 
 import lombok.Getter;
 import lombok.Setter;

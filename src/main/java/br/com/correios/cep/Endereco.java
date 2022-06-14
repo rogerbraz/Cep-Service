@@ -1,16 +1,22 @@
-package br.com.correios.cep.model;
+package br.com.correios.cep;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class Endereco {
 
 	@Id
@@ -23,17 +29,5 @@ public class Endereco {
 	private String bairro;
 	private String cidade;
 	private String estado;
-
-	public Endereco(String cep, String logradouro, String bairro, String cidade, String estado) {
-		this.cep = cep;
-		this.logradouro = logradouro;
-		this.bairro = bairro;
-		this.cidade = cidade;
-		this.estado = estado;
-	}
-
-	public Endereco() {
-		super();
-	}
 
 }

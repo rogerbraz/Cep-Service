@@ -7,8 +7,8 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://localhost:3306/cep
-    username: root
-    password: well2901
+    username: admin
+    password: adminadmin
   jpa:
      hibernate:
        ddl-auto: update

@@ -1,10 +1,13 @@
-package br.com.correios.cep.controller;
+package br.com.correios.pessoa;
+
+import java.util.List;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,45 +19,45 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.correios.cep.controller.dto.AtualizarEnderecoForm;
-import br.com.correios.cep.controller.dto.EnderecoDTO;
-import br.com.correios.cep.controller.dto.EnderecoForm;
-import br.com.correios.cep.repository.EnderecoRepository;
-import br.com.correios.cep.service.CepService;
+import br.com.correios.pessoa.dto.PessoaDTO;
 
 @RestController
-@RequestMapping("/endereco")
-public class CepController {
+@RequestMapping("/pessoa")
+public class PessoaController {
 
 	@Autowired
-	public CepService cepservice;
+	public PessoaService pessoaservice;
 	@Autowired
-	public EnderecoRepository enderecoRepository;
+	public PessoaRepository pessoaRepository;
 
 	@GetMapping
 	@Transactional
-	public Page<EnderecoDTO> buscaCep(@PathVariable(required = false) Long id, int pagina, int qtd, String ordenacao) {
+	public ResponseEntity<Page<Pessoa>> buscaPage(@PathVariable(required = false) Long id, Pageable paginacao) {
 
-		return cepservice.buscaCep(id, pagina, qtd, ordenacao);
+		return pessoaservice.buscaPessoa(id, paginacao);
 	}
 
 	@PostMapping()
 	@Transactional
-	public ResponseEntity<EnderecoDTO> cadastrar(@RequestBody @Valid EnderecoForm form,
+	public ResponseEntity<Pessoa> cadastrar(@RequestBody(required = true) @Valid PessoaDTO dto,
 			UriComponentsBuilder uriBuilder) {
-		return cepservice.cadastrar(form, uriBuilder);
+		return pessoaservice.cadastrar(dto, uriBuilder);
 	}
 
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<EnderecoDTO> atualizar(@PathVariable Long id,
-			@RequestBody @Valid AtualizarEnderecoForm form) {
-		return cepservice.atualizar(id, form);
+	public ResponseEntity<Pessoa> atualizar(@PathVariable(required = true) Long id,
+			@RequestBody(required = true) @Valid PessoaDTO dto) {
+		return pessoaservice.atualizar(id, dto);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> remover(@PathVariable Long id) {
-		return cepservice.remover(id);
+		return pessoaservice.remover(id);
 	}
 
+	@GetMapping("/{id}")
+	public ResponseEntity<List<Pessoa>> buscarId(@PathVariable Long id) {
+		return ResponseEntity.ok(pessoaservice.buscarId(id));
+	}
 }

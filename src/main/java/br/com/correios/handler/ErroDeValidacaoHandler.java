@@ -1,4 +1,4 @@
-package br.com.correios.cep.controller.validacao;
+package br.com.correios.handler;
 
 import java.util.ArrayList;
 import java.util.List;
