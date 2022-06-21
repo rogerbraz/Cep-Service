@@ -1,7 +1,5 @@
 package br.com.correios.cep;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
