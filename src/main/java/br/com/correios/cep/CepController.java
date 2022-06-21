@@ -32,7 +32,7 @@ public class CepController {
 
 	@GetMapping
 	@Transactional
-	public Page<EnderecoDTO> buscaCep(@PathVariable(required = false) Long id, Pageable paginacao) {
+	public ResponseEntity<Page<Endereco>> buscaCep(@PathVariable(required = false) Long id, Pageable paginacao) {
 		return cepservice.buscaCep(id, paginacao);	}
 
 	@PostMapping()
@@ -44,19 +44,21 @@ public class CepController {
 
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<EnderecoDTO> atualizar(@PathVariable Long id,
+	public ResponseEntity<Endereco> atualizar(@PathVariable Long id,
 			@RequestBody @Valid EnderecoDTO dto) {
 		return cepservice.atualizar(id, dto);
 	}
 
 	@DeleteMapping("/{id}")
+	@Transactional
 	public ResponseEntity<?> remover(@PathVariable Long id) {
 		return cepservice.remover(id);
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<List<Endereco>> buscarId(
-			@PathVariable Long id){
-		return ResponseEntity.ok(cepservice.buscarId(id));
+	@Transactional
+	public ResponseEntity<Page<Endereco>> buscarId(
+			@PathVariable Long id, Pageable paginacao){
+		return ResponseEntity.ok(cepservice.buscarId(id, paginacao));
 	}
 }

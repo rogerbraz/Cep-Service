@@ -1,8 +1,6 @@
 package br.com.correios.cep;
 
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,9 +14,8 @@ public interface EnderecoRepository extends JpaRepository <Endereco, Long>{
 	Page<Endereco> findById(Long id, Pageable paginacao);
 	
 	@Query(
-	value = "SELECT * FROM ENDERECO e WHERE e.id = ?1", 
-	nativeQuery = true)
-	
-	List<Endereco> findEnderecoById(@RequestParam Long id);
+			value = "SELECT * FROM ENDERECO e WHERE e.id = ?1", 
+			nativeQuery = true)
+	Page<Endereco> findEnderecoById(@RequestParam Long id, Pageable paginacao);
 
 }
