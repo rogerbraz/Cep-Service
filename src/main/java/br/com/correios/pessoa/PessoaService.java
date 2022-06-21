@@ -1,7 +1,6 @@
 package br.com.correios.pessoa;
 
 import java.net.URI;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,8 +26,7 @@ public class PessoaService {
 		Pessoa pessoa = pessoaRepository.save(Pessoa.builder()
 				.nome(dto.getNome())
 				.documento(dto.getDocumento())
-				.endereco1(dto.getEndereco1())
-				.endereco2(dto.getEndereco2())
+				.endereco(dto.getEndereco())
 				.telefone(dto.getTelefone())
 				.build());
 
@@ -42,8 +40,7 @@ public class PessoaService {
 		Pessoa pessoa = pessoaRepository.save(Pessoa.builder()
 				.nome(dto.getNome())
 				.documento(dto.getDocumento())
-				.endereco1(dto.getEndereco1())
-				.endereco2(dto.getEndereco2())
+				.endereco(dto.getEndereco())
 				.telefone(dto.getTelefone()).build());
 		
 		return ResponseEntity.ok(pessoa);
@@ -54,16 +51,20 @@ public class PessoaService {
 		return ResponseEntity.ok().build();
 	}
 
-	public ResponseEntity<Page<Pessoa>> buscaPessoa(Long id, Pageable paginacao) {
+	public ResponseEntity<Page<PessoaDTO>> buscaPessoa(Long id, Pageable paginacao) {
 		if (id != null) {
 			Page<Pessoa> pessoa = pessoaRepository.findById(id, paginacao);
-			return ResponseEntity.ok(pessoa);
+			
+			return ResponseEntity.ok(pessoa.map(PessoaDTO::new));
 		}
-		return ResponseEntity.notFound().build();
+		Page<Pessoa> pessoa = pessoaRepository.findAll(paginacao);
+		return ResponseEntity.ok(pessoa.map(PessoaDTO::new));
 	}
 
-	public List<Pessoa> buscarId(Long id) {
-		return pessoaRepository.findPessoaById(id);
+	public Page<Pessoa> buscarId(Long id,  Pageable paginacao) {
+		
+		
+		return pessoaRepository.findById(id, paginacao);
 	}
 
 }

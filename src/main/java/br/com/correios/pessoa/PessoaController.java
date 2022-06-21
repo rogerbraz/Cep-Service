@@ -1,7 +1,5 @@
 package br.com.correios.pessoa;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
@@ -32,9 +30,13 @@ public class PessoaController {
 
 	@GetMapping
 	@Transactional
-	public ResponseEntity<Page<Pessoa>> buscaPage(@PathVariable(required = false) Long id, Pageable paginacao) {
-
+	public ResponseEntity<Page<PessoaDTO>> buscaPessoas(@PathVariable(required = false) Long id, Pageable paginacao) {
 		return pessoaservice.buscaPessoa(id, paginacao);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<Page<Pessoa>> buscarPessoasId(@PathVariable Long id, Pageable paginacao) {
+		return ResponseEntity.ok(pessoaservice.buscarId(id, paginacao));
 	}
 
 	@PostMapping()
@@ -56,8 +58,4 @@ public class PessoaController {
 		return pessoaservice.remover(id);
 	}
 
-	@GetMapping("/{id}")
-	public ResponseEntity<List<Pessoa>> buscarId(@PathVariable Long id) {
-		return ResponseEntity.ok(pessoaservice.buscarId(id));
-	}
 }

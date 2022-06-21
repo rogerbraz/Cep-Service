@@ -33,7 +33,6 @@ public class CepController {
 	@GetMapping
 	@Transactional
 	public Page<EnderecoDTO> buscaCep(@PathVariable(required = false) Long id, Pageable paginacao) {
-
 		return cepservice.buscaCep(id, paginacao);	}
 
 	@PostMapping()

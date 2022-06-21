@@ -37,7 +37,7 @@ public class CepService {
 		return ResponseEntity.created(uri).body(endereco);
 	}
 
-	public ResponseEntity<EnderecoDTO> atualizar(@PathVariable Long id, @Valid EnderecoDTO dto) {
+	public ResponseEntity<Endereco> atualizar(@PathVariable Long id, @Valid EnderecoDTO dto) {
 		Endereco endereco = enderecoRepository.save(Endereco.builder()
 				.cep(dto.getCep())
 				.logradouro(dto.getLogradouro())
@@ -45,7 +45,7 @@ public class CepService {
 				.cidade(dto.getCidade())
 				.build()
 				);
-		return ResponseEntity.ok(new EnderecoDTO(endereco));
+		return ResponseEntity.ok(endereco);
 	}
 
 	public ResponseEntity<?> remover(@PathVariable Long id) {
@@ -53,10 +53,10 @@ public class CepService {
 		return ResponseEntity.ok().build();
 	}
 
-	public Page<EnderecoDTO> buscaCep(Long id, Pageable paginacao) {
+	public Page<EnderecoDto> buscaCep(Long id, Pageable paginacao) {
 		if (id != null) {
 			Page<Endereco> endereco = enderecoRepository.findById(id, paginacao);
-			return EnderecoDTO.converter(endereco);
+			return endereco.map();
 		}
 		return EnderecoDTO.converter(enderecoRepository.findAll(paginacao));
 	}
